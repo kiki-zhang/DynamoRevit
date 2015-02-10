@@ -82,7 +82,6 @@ namespace RevitNodesTests.Elements
                 Point.ByCoordinates(10, 0, 10)
             };
             var fs = FamilySymbol.ByName("3PointAC");
-
             Assert.Throws(typeof(ArgumentException), () => AdaptiveComponent.ByPoints(pts, fs));
         }
 

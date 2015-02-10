@@ -104,10 +104,10 @@ namespace Revit.Elements
                     InternalSetPositions(pts.ToXyzs());
                     st.Commit();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     st.RollBack();
-                    throw new ArgumentException("An adaptive component could not be found or created.");
+                    throw new ArgumentException(Resource1.Adaptive_Component_Creation_Failed + ex.Message);
                 }
             }
 
@@ -154,10 +154,10 @@ namespace Revit.Elements
                     InternalSetUvsAndFace(pts.ToUvs(), f.InternalReference);
                     st.Commit();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     st.RollBack();
-                    throw new ArgumentException("An adaptive component could not be found or created.");
+                    throw new ArgumentException(Resource1.Adaptive_Component_Creation_Failed + ex.Message);
                 }
             }
 
@@ -201,10 +201,10 @@ namespace Revit.Elements
                     InternalSetParamsAndCurve(parms, c);
                     st.Commit();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     st.RollBack();
-                    throw new ArgumentException("An adaptive component could not be found or created.");
+                    throw new ArgumentException(Resource1.Adaptive_Component_Creation_Failed + ex.Message);
                 }
             }
 
@@ -225,18 +225,18 @@ namespace Revit.Elements
         #region Internal mutators
 
         /// <summary>
-       /// Set the family symbol for the internal family instance 
-       /// </summary>
-       /// <param name="fs"></param>
-        private void InternalSetFamilySymbol( FamilySymbol fs)
-       {
-          TransactionManager.Instance.EnsureInTransaction(Document);
+        /// Set the family symbol for the internal family instance 
+        /// </summary>
+        /// <param name="fs"></param>
+        private void InternalSetFamilySymbol(FamilySymbol fs)
+        {
+            TransactionManager.Instance.EnsureInTransaction(Document);
 
-          InternalFamilyInstance.Symbol = fs.InternalFamilySymbol;
+            InternalFamilyInstance.Symbol = fs.InternalFamilySymbol;
 
-          TransactionManager.Instance.TransactionTaskDone();
+            TransactionManager.Instance.TransactionTaskDone();
 
-       }
+        }
 
         /// <summary>
         /// Set the positions of the internal family instance from a list of XYZ points
@@ -586,6 +586,5 @@ namespace Revit.Elements
 
         #endregion
 
-        
     }
 }
